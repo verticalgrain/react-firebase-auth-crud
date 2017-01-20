@@ -10,6 +10,7 @@ import Home from './Home'
 import Dashboard from './Dashboard'
 import List from './List'
 import Create from './Create'
+import Item from './Item'
 import '../App.css';
 
 function MatchWhenAuthed ({component: Component, authed, ...rest}) {
@@ -62,6 +63,7 @@ export default class App extends Component {
   }
 
   render() {
+    const pathname = '';
     return (
       <BrowserRouter>
         {({router}) => (
@@ -73,7 +75,7 @@ export default class App extends Component {
               </h2>
               <ul className="nav">
                 <li>
-                  <Link to="/" className="nav__item">All Items</Link>
+                  <Link to="/items" className="nav__item">All Items</Link>
                 </li>
                 <li>
                   <Link to="/create" className="nav__item">Create Item</Link>
@@ -98,8 +100,10 @@ export default class App extends Component {
               </ul>
             </div>
             <Match pattern='/' exactly component={Home} />
-            <Match pattern='/' exactly component={List} />
+            
             <Match pattern='/create' exactly component={Create} />
+            <Match pattern="/items" exactly component={List} />
+
             <MatchWhenUnauthed authed={this.state.authed} pattern='/login' component={Login} />
             <MatchWhenUnauthed authed={this.state.authed} pattern='/register' component={Register} />
             <MatchWhenAuthed authed={this.state.authed} pattern='/dashboard' component={Dashboard} />

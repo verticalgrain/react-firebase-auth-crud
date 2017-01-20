@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { ref } from '../config/constants'
+import { firebaseAuth } from '../config/constants'
 
-class UpdateableItem extends Component {
+class Item extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      id: this.props.params,
       title: props.title,
       text: props.text,
     };
@@ -21,24 +23,24 @@ class UpdateableItem extends Component {
   handleUpdateItem(e) {
     e.preventDefault();
     if (this.state.title && this.state.title.trim().length !== 0) {
-      this.dbItems.child(this.props.dbkey).update(this.state);
+      this.dbItems.child(this.state.id).update(this.state);
     }
   }
 
   render(){
     return (
       <form onSubmit={ this.handleUpdateItem }>
-        <label htmlFor={'title' + this.props.dbkey}>Title </label>
+        <label htmlFor={'title' + this.state.id}>Title </label>
         <input
-          id={'title' + this.props.dbkey}
+          id={'title' + this.state.id}
           onChange={ this.itemChange }
           value={ this.state.title }
           name="title"
         />
         <br/>
-        <label htmlFor={'text' + this.props.dbkey}>Text </label>
+        <label htmlFor={'text' + this.state.id}>Text </label>
         <textarea
-          id={'text' + this.props.dbkey}
+          id={'text' + this.state.id}
           onChange={ this.itemChange }
           value={ this.state.text }
           name="text"
@@ -53,4 +55,4 @@ class UpdateableItem extends Component {
 }
 
 
-export default UpdateableItem;
+export default Item;

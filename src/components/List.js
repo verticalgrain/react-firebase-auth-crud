@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { ref } from '../config/constants'
 import { firebaseAuth } from '../config/constants'
-import UpdateableItem from './UpdateableItem'
+import { Match, Link } from 'react-router'
+import Item from './Item'
+import ItemTeaser from './ItemTeaser'
 
 export default class List extends Component {
-  constructor () {
+  constructor (props) {
     super();
     this.state = {
-      items: []
+      items: [],
+      pathname: props.pathname
     }
     this.dbItems = ref.child('items');
     this.removeItem = this.removeItem.bind(this);
@@ -44,14 +47,16 @@ export default class List extends Component {
       <div>
         <ul>
           {this.state.items.map(function(item) {
-            return ( 
+            return (
               <li key={ item['.key'] }>
-                <UpdateableItem dbkey={item['.key']} title={item.title} text={item.text}  />
-                <a onClick={ _this.removeItem.bind(null, item['.key']) } style={{cursor: 'pointer', color: 'red'}}>Delete</a>
+                <ItemTeaser pathname={_this.state.pathname} dbkey={item['.key']} title={item.title} text={item.text}  />
               </li>
             );
           })}
         </ul>
+
+        <Match pattern={`${_this.state.pathname}/:itemid`} component={Item} />
+      
       </div>
     )
   }

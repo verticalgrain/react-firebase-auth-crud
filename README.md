@@ -25,4 +25,5 @@ npm install
 npm start
 ```
 
-* Customize config details in src/config/constants.js 
+* If you don't have a Firebase account already, create one for free at https://firebase.google.com
+* Customize Firebase config details in src/config/constants.js
