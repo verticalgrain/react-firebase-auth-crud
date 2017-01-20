@@ -54,7 +54,7 @@ export default class List extends Component {
             );
           })}
         </ul>
-
+        
         <Match pattern={`${_this.state.pathname}/:itemid`} component={Item} />
       
       </div>

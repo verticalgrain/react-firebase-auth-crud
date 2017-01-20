@@ -6,7 +6,6 @@ class Item extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      id: this.props.params,
       title: props.title,
       text: props.text,
     };
