@@ -103,6 +103,7 @@ export default class App extends Component {
             
             <Match pattern='/create' exactly component={Create} />
             <Match pattern="/items" exactly component={List} />
+            <Match pattern="/items/:itemid" component={Item} />
 
             <MatchWhenUnauthed authed={this.state.authed} pattern='/login' component={Login} />
             <MatchWhenUnauthed authed={this.state.authed} pattern='/register' component={Register} />

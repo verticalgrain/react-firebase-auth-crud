@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { ref } from '../config/constants'
 import { firebaseAuth } from '../config/constants'
+import * as firebase from 'firebase';
 
 class Item extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      title: props.title,
-      text: props.text,
+      id: props.params.itemid,
+      title: 'loading',
+      text: 'loading',
     };
-    this.dbItems = ref.child('items');
+    this.theItem = ref.child('items/'+this.state.id);
 
+    this.removeItem = this.removeItem.bind(this);
     this.itemChange = this.itemChange.bind(this);
     this.handleUpdateItem = this.handleUpdateItem.bind(this);
+
   }
 
   itemChange(e) {
@@ -21,37 +25,65 @@ class Item extends Component {
 
   handleUpdateItem(e) {
     e.preventDefault();
-    if (this.state.title && this.state.title.trim().length !== 0) {
-      this.dbItems.child(this.state.id).update(this.state);
-    }
+    console.log('attempting to update')
+    // if (this.state.title && this.state.title.trim().length !== 0) {
+    this.theItem.update(this.state);
+    // }
+
+  }
+
+  removeItem(key){
+    this.theItem.remove();
+  }
+
+  componentDidMount = () =>  {
+    const item = {};
+
+    this.theItem.on('value', dataSnapshot => {
+
+      dataSnapshot.forEach(function(childSnapshot) {
+        item[childSnapshot.key] = childSnapshot.val()
+      });
+      
+      this.setState({
+        title: item['title'],
+        text: item['text']
+      })
+
+    })
+
   }
 
   render(){
-    return (
-      <form onSubmit={ this.handleUpdateItem }>
-        <label htmlFor={'title' + this.state.id}>Title </label>
-        <input
-          id={'title' + this.state.id}
-          onChange={ this.itemChange }
-          value={ this.state.title }
-          name="title"
-        />
-        <br/>
-        <label htmlFor={'text' + this.state.id}>Text </label>
-        <textarea
-          id={'text' + this.state.id}
-          onChange={ this.itemChange }
-          value={ this.state.text }
-          name="text"
-        >
-        </textarea>
-        <br/>
+    var _this = this;
 
-        <button>Save</button>
-      </form>
+    return (
+        <div>
+          <form onSubmit={ this.handleUpdateItem }>
+            <label htmlFor={'title' + this.state.id}>Title </label>
+            <input
+              id={'title' + this.state.id}
+              type="text"
+              name="title"
+              value={this.state.title}
+              onChange={this.itemChange}
+            />
+            <br/>
+            <label htmlFor={'text' + this.state.id}>Text </label>
+            <textarea
+              id={'text' + this.state.id}
+              type="textarea"
+              name="text"
+              value={this.state.text}
+              onChange={this.itemChange}
+            />
+            <br/>
+            <button>Save</button>
+          </form>
+          <a onClick={ _this.removeItem.bind(null, this.state.id) }>Delete</a>
+        </div>
     );
   }
 }
-
 
 export default Item;
