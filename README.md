@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+Thanks to SimonKib for [this helpful SO thread about React / Firebase CRUD](http://stackoverflow.com/questions/35493490/is-there-a-simple-crud-example-app-using-react-js-and-firebase#answer-39932105), and Tyler McGinnis for [this helpful example of Authentication and Routing](https://github.com/tylermcginnis/react-router-firebase-auth)
+
 ## Setup Instructions
 
 * If you don't have it already, get create-react-app:
