@@ -11,6 +11,7 @@ import Dashboard from './Dashboard'
 import List from './List'
 import Create from './Create'
 import Item from './Item'
+import CreateEdit from './CreateEdit'
 import '../App.css';
 
 function MatchWhenAuthed ({component: Component, authed, ...rest}) {
@@ -101,13 +102,15 @@ export default class App extends Component {
             </div>
             <Match pattern='/' exactly component={Home} />
             
-            <Match pattern='/create' exactly component={Create} />
             <Match pattern="/items" exactly component={List} />
             <Match pattern="/items/:itemid" component={Item} />
+            <Match authed={this.state.authed} pattern='/edit' component={CreateEdit} />
+            <Match authed={this.state.authed} pattern='/create' component={CreateEdit} />
 
             <MatchWhenUnauthed authed={this.state.authed} pattern='/login' component={Login} />
             <MatchWhenUnauthed authed={this.state.authed} pattern='/register' component={Register} />
             <MatchWhenAuthed authed={this.state.authed} pattern='/dashboard' component={Dashboard} />
+
             <Miss render={() => <h3>Oops, there doesnt seem to be a page here</h3>} />
           </div>
         )}

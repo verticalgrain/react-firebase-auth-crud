@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import FirebaseImageUploader from 'firebase-image-uploader'
 
 const config = {
   apiKey: "AIzaSyDMkJOU44LTPfwIHDNYaG7SihfeQnYhvMw",
